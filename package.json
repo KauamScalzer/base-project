@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/KauamScalzer/base-project/issues"
   },
-  "homepage": "https://github.com/KauamScalzer/base-project#readme"
+  "homepage": "https://github.com/KauamScalzer/base-project#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^5.0.8"
+  }
 }

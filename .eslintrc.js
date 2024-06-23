@@ -19,7 +19,7 @@ module.exports = {
     'eqeqeq': 'error',
     'comma-spacing': ['error', {
       'before': false,
-      'after': true 
+      'after': true
     }],
     'brace-style': 'error',
     'curly': 'error',
@@ -31,7 +31,7 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     'key-spacing': ['error', {
       'beforeColon': false,
-      'afterColon': true 
+      'afterColon': true
     }],
     'no-multiple-empty-lines': ['error', { max: 1 }],
     'no-lone-blocks': 'error',
@@ -40,6 +40,8 @@ module.exports = {
     'no-unreachable': 'error',
     'object-property-newline': 'error',
     'space-in-parens': 'error',
-    'object-curly-newline': ['error', { multiline: true }]
+    'object-curly-newline': ['error', { multiline: true }],
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-namespace': 'off'
   }
 }

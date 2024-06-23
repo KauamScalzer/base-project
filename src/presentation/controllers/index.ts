@@ -1,0 +1,1 @@
+export { SignUpUserController } from './SignupUserController'

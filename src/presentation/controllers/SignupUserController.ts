@@ -7,6 +7,9 @@ export class SignUpUserController {
     if (!request.name) {
       return badRequest(new MissingParamError('name'))
     }
+    if (!request.email) {
+      return badRequest(new MissingParamError('email'))
+    }
     return {
       statusCode: 501,
       body: 'Not Implemented'

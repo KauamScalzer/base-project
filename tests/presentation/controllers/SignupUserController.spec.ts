@@ -32,4 +32,14 @@ describe('SignupUserController', () => {
     const httpResponse = await sut.handle(mockRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('email')))
   })
+
+  test('Should return 400 if no password is provided', async () => {
+    const { sut } = makeSut()
+    const mockRequest: any = {
+      name: faker.internet.userName(),
+      email: faker.internet.email()
+    }
+    const httpResponse = await sut.handle(mockRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('password')))
+  })
 })

@@ -30,7 +30,7 @@ describe('CreateUser usecase', () => {
     expect(verifyUserExistByEmailRepositorySpy.email).toEqual(params.email)
   })
 
-  test('Should return null if IVerifyUserExistByEmailRepository returns true', async () => {
+  test('Should return false if IVerifyUserExistByEmailRepository returns true', async () => {
     const { sut } = makeSut()
     const params = mockCreateUserParams()
     const result = await sut.create(params)
@@ -55,5 +55,13 @@ describe('CreateUser usecase', () => {
       name: params.name,
       password: hasherSpy.result
     })
+  })
+
+  test('Should true on success', async () => {
+    const { sut, verifyUserExistByEmailRepositorySpy } = makeSut()
+    verifyUserExistByEmailRepositorySpy.result = false
+    const params = mockCreateUserParams()
+    const result = await sut.create(params)
+    expect(result).toBeTruthy()
   })
 })

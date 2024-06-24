@@ -81,4 +81,13 @@ describe('CreateUser usecase', () => {
     const promise = sut.create(params)
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should throw if ICreateUserRepository throws', async () => {
+    const { sut, verifyUserExistByEmailRepositorySpy, createUserRepositorySpy } = makeSut()
+    verifyUserExistByEmailRepositorySpy.result = false
+    jest.spyOn(createUserRepositorySpy, 'create').mockImplementationOnce(throwError)
+    const params = mockCreateUserParams()
+    const promise = sut.create(params)
+    await expect(promise).rejects.toThrow()
+  })
 })

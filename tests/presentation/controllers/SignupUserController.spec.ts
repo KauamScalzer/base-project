@@ -2,14 +2,21 @@ import { SignUpUserController } from '../../../src/presentation/controllers'
 import { faker } from '@faker-js/faker'
 import { badRequest } from '../../../src/presentation/helpers/httpHelpers'
 import { InvalidParamTypeError, MissingParamError } from '../../../src/presentation/errors'
+import { CreateUserSpy } from '../mocks/MockUser'
+import { mockCreateUserParams } from '../../domain/mocks'
 
 type SutTypes = {
   sut: SignUpUserController
+  createUserSpy: CreateUserSpy
 }
 
 const makeSut = (): SutTypes => {
-  const sut = new SignUpUserController()
-  return { sut }
+  const createUserSpy = new CreateUserSpy()
+  const sut = new SignUpUserController(createUserSpy)
+  return {
+    sut,
+    createUserSpy 
+  }
 }
 
 describe('SignupUserController', () => {
@@ -74,5 +81,12 @@ describe('SignupUserController', () => {
     }
     const httpResponse = await sut.handle(mockRequest)
     expect(httpResponse).toEqual(badRequest(new InvalidParamTypeError('password')))
+  })
+
+  test('Should call ICreateUser with correct values', async () => {
+    const { sut, createUserSpy } = makeSut()
+    const request = mockCreateUserParams()
+    await sut.handle(request)
+    expect(createUserSpy.params).toEqual(request)
   })
 })

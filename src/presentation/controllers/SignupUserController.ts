@@ -1,4 +1,4 @@
-import { MissingParamError } from '../errors'
+import { InvalidParamTypeError, MissingParamError } from '../errors'
 import { badRequest } from '../helpers/httpHelpers'
 import { HttpResponse } from '../protocols'
 
@@ -9,6 +9,9 @@ export class SignUpUserController {
       if (!request[field as keyof SignUpUserController.Request]) {
         return badRequest(new MissingParamError(field))
       }
+    }
+    if (typeof request.name !== 'string') {
+      return badRequest(new InvalidParamTypeError('name'))
     }
     return {
       statusCode: 501,

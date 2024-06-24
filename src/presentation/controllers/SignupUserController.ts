@@ -1,6 +1,6 @@
 import { IAuthorizeUser, ICreateUser } from '../../domain/usecases'
 import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../errors'
-import { badRequest, conflict, serverError } from '../helpers/httpHelpers'
+import { badRequest, conflict, ok, serverError } from '../helpers/httpHelpers'
 import { HttpResponse } from '../protocols'
 
 export class SignUpUserController {
@@ -30,11 +30,8 @@ export class SignUpUserController {
       if (!user) {
         return conflict(new AlreadyInUseError('email'))
       }
-      await this.authorizeUser.authorize(request.email, request.password)
-      return {
-        statusCode: 501,
-        body: 'Not Implemented'
-      }
+      const result = await this.authorizeUser.authorize(request.email, request.password)
+      return ok(result)
     } catch (error: any) {
       return serverError(error)
     }

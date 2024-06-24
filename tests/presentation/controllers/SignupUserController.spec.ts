@@ -64,4 +64,15 @@ describe('SignupUserController', () => {
     const httpResponse = await sut.handle(mockRequest)
     expect(httpResponse).toEqual(badRequest(new InvalidParamTypeError('email')))
   })
+
+  test('Should return 400 if invalid type for password is provided', async () => {
+    const { sut } = makeSut()
+    const mockRequest: any = {
+      name: faker.internet.userName(),
+      email: faker.internet.email(),
+      password: faker.number.int()
+    }
+    const httpResponse = await sut.handle(mockRequest)
+    expect(httpResponse).toEqual(badRequest(new InvalidParamTypeError('password')))
+  })
 })

@@ -1,7 +1,7 @@
 import { SignUpUserController } from '../../../src/presentation/controllers'
 import { faker } from '@faker-js/faker'
-import { badRequest } from '../../../src/presentation/helpers/httpHelpers'
-import { InvalidParamTypeError, MissingParamError } from '../../../src/presentation/errors'
+import { badRequest, conflict } from '../../../src/presentation/helpers/httpHelpers'
+import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../../../src/presentation/errors'
 import { CreateUserSpy } from '../mocks/MockUser'
 import { mockCreateUserParams } from '../../domain/mocks'
 
@@ -88,5 +88,13 @@ describe('SignupUserController', () => {
     const request = mockCreateUserParams()
     await sut.handle(request)
     expect(createUserSpy.params).toEqual(request)
+  })
+
+  test('Should return 409 if recieved email is already in use', async () => {
+    const { sut, createUserSpy } = makeSut()
+    createUserSpy.result = null
+    const request = mockCreateUserParams()
+    const httpResponse = await sut.handle(request)
+    expect(httpResponse).toEqual(conflict(new AlreadyInUseError('email')))
   })
 })

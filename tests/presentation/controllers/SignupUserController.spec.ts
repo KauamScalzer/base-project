@@ -116,4 +116,12 @@ describe('SignupUserController', () => {
     expect(authorizeUserSpy.email).toEqual(request.email)
     expect(authorizeUserSpy.password).toEqual(request.password)
   })
+
+  test('Should return 500 if IAuthorizeUser throw', async () => {
+    const { sut, authorizeUserSpy } = makeSut()
+    jest.spyOn(authorizeUserSpy, 'authorize').mockImplementationOnce(throwError)
+    const request = mockCreateUserParams()
+    const httpResponse = await sut.handle(request)
+    expect(httpResponse).toEqual(serverError(new Error()))
+  })
 })

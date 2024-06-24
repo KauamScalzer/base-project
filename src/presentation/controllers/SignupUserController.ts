@@ -1,11 +1,12 @@
-import { ICreateUser } from '../../domain/usecases'
+import { IAuthorizeUser, ICreateUser } from '../../domain/usecases'
 import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../errors'
 import { badRequest, conflict, serverError } from '../helpers/httpHelpers'
 import { HttpResponse } from '../protocols'
 
 export class SignUpUserController {
   constructor (
-    private readonly createUser: ICreateUser
+    private readonly createUser: ICreateUser,
+    private readonly authorizeUser: IAuthorizeUser
   ) {}
 
   async handle (request: SignUpUserController.Request): Promise<HttpResponse> {
@@ -29,6 +30,7 @@ export class SignUpUserController {
       if (!user) {
         return conflict(new AlreadyInUseError('email'))
       }
+      await this.authorizeUser.authorize(request.email, request.password)
       return {
         statusCode: 501,
         body: 'Not Implemented'

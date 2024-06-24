@@ -23,4 +23,11 @@ describe('CreateUser usecase', () => {
     await sut.create(params)
     expect(verifyUserExistByEmailRepositorySpy.email).toEqual(params.email)
   })
+
+  test('Should return null if IVerifyUserExistByEmailRepository returns true', async () => {
+    const { sut } = makeSut()
+    const params = mockCreateUserParams()
+    const result = await sut.create(params)
+    expect(result).toBeNull()
+  })
 })

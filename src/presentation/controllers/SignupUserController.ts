@@ -1,8 +1,13 @@
+import { ICreateUser } from '../../domain/usecases'
 import { InvalidParamTypeError, MissingParamError } from '../errors'
 import { badRequest } from '../helpers/httpHelpers'
 import { HttpResponse } from '../protocols'
 
 export class SignUpUserController {
+  constructor (
+    private readonly createUser: ICreateUser
+  ) {}
+
   async handle (request: SignUpUserController.Request): Promise<HttpResponse> {
     const requiredFields: string[] = ['name', 'email', 'password']
     for (const field of requiredFields) {
@@ -19,6 +24,7 @@ export class SignUpUserController {
     if (typeof request.password !== 'string') {
       return badRequest(new InvalidParamTypeError('password'))
     }
+    await this.createUser.create(request)
     return {
       statusCode: 501,
       body: 'Not Implemented'

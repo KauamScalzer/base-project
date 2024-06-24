@@ -1,6 +1,6 @@
 import { ICreateUser } from '../../domain/usecases'
-import { InvalidParamTypeError, MissingParamError } from '../errors'
-import { badRequest } from '../helpers/httpHelpers'
+import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../errors'
+import { badRequest, conflict } from '../helpers/httpHelpers'
 import { HttpResponse } from '../protocols'
 
 export class SignUpUserController {
@@ -24,7 +24,10 @@ export class SignUpUserController {
     if (typeof request.password !== 'string') {
       return badRequest(new InvalidParamTypeError('password'))
     }
-    await this.createUser.create(request)
+    const user = await this.createUser.create(request)
+    if (!user) {
+      return conflict(new AlreadyInUseError('email'))
+    }
     return {
       statusCode: 501,
       body: 'Not Implemented'

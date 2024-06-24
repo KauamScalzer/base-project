@@ -16,6 +16,7 @@ export class CreateUser implements ICreateUser {
         ...user,
         password: hashedPassword 
       })
+      return true
     }
     return false
   }

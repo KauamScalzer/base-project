@@ -1,6 +1,6 @@
 import { SignUpUserController } from '../../../src/presentation/controllers'
 import { faker } from '@faker-js/faker'
-import { badRequest, conflict, serverError } from '../../../src/presentation/helpers/httpHelpers'
+import { badRequest, conflict, ok, serverError } from '../../../src/presentation/helpers/httpHelpers'
 import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../../../src/presentation/errors'
 import { AuthorizeUserSpy, CreateUserSpy } from '../mocks/MockUser'
 import { mockCreateUserParams, throwError } from '../../domain/mocks'
@@ -115,6 +115,13 @@ describe('SignupUserController', () => {
     await sut.handle(request)
     expect(authorizeUserSpy.email).toEqual(request.email)
     expect(authorizeUserSpy.password).toEqual(request.password)
+  })
+
+  test('Should return 200 on success', async () => {
+    const { sut, authorizeUserSpy } = makeSut()
+    const request = mockCreateUserParams()
+    const httpResponse = await sut.handle(request)
+    expect(httpResponse).toEqual(ok(authorizeUserSpy.result))
   })
 
   test('Should return 500 if IAuthorizeUser throw', async () => {

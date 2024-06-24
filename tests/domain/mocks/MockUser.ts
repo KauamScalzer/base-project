@@ -1,4 +1,4 @@
-import { ICreateUser } from './../../../src/domain/usecases'
+import { ICreateUser, IAuthorizeUser } from './../../../src/domain/usecases'
 import { faker } from '@faker-js/faker'
 
 export const mockCreateUserParams = (): ICreateUser.Params => ({
@@ -8,3 +8,9 @@ export const mockCreateUserParams = (): ICreateUser.Params => ({
 })
 
 export const mockCreateUserResult = (): ICreateUser.Result => ({ id: faker.number.int() })
+
+export const mockAuthorizeUserResult = (): IAuthorizeUser.Result => ({
+  id: faker.number.int(),
+  name: faker.internet.userName(),
+  token: faker.string.uuid()
+})

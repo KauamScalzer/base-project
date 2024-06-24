@@ -2,20 +2,23 @@ import { SignUpUserController } from '../../../src/presentation/controllers'
 import { faker } from '@faker-js/faker'
 import { badRequest, conflict, serverError } from '../../../src/presentation/helpers/httpHelpers'
 import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../../../src/presentation/errors'
-import { CreateUserSpy } from '../mocks/MockUser'
+import { AuthorizeUserSpy, CreateUserSpy } from '../mocks/MockUser'
 import { mockCreateUserParams, throwError } from '../../domain/mocks'
 
 type SutTypes = {
   sut: SignUpUserController
   createUserSpy: CreateUserSpy
+  authorizeUserSpy: AuthorizeUserSpy
 }
 
 const makeSut = (): SutTypes => {
   const createUserSpy = new CreateUserSpy()
-  const sut = new SignUpUserController(createUserSpy)
+  const authorizeUserSpy = new AuthorizeUserSpy()
+  const sut = new SignUpUserController(createUserSpy, authorizeUserSpy)
   return {
     sut,
-    createUserSpy 
+    createUserSpy,
+    authorizeUserSpy
   }
 }
 
@@ -104,5 +107,13 @@ describe('SignupUserController', () => {
     const request = mockCreateUserParams()
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should call IAuthorizeUser with correct values', async () => {
+    const { sut, authorizeUserSpy } = makeSut()
+    const request = mockCreateUserParams()
+    await sut.handle(request)
+    expect(authorizeUserSpy.email).toEqual(request.email)
+    expect(authorizeUserSpy.password).toEqual(request.password)
   })
 })

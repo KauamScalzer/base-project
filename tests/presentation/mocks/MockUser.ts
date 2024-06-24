@@ -1,5 +1,5 @@
-import { mockCreateUserResult } from '../../domain/mocks'
-import { ICreateUser } from '../../../src/domain/usecases'
+import { mockAuthorizeUserResult, mockCreateUserResult } from '../../domain/mocks'
+import { ICreateUser, IAuthorizeUser } from '../../../src/domain/usecases'
 
 export class CreateUserSpy implements ICreateUser {
   params?: ICreateUser.Params
@@ -7,6 +7,18 @@ export class CreateUserSpy implements ICreateUser {
   
   async create (params: ICreateUser.Params): Promise<ICreateUser.Result> {
     this.params = params
+    return this.result
+  }
+}
+
+export class AuthorizeUserSpy implements IAuthorizeUser {
+  email?: string
+  password?: string
+  result: IAuthorizeUser.Result = mockAuthorizeUserResult()
+  
+  async authorize (email: string, password: string): Promise<IAuthorizeUser.Result> {
+    this.email = email
+    this.password = password
     return this.result
   }
 }

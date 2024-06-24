@@ -1,21 +1,24 @@
 import { CreateUser } from '../../../src/data/usecases/CreateUser'
 import { mockCreateUserParams } from '../../domain/mocks'
-import { HasherSpy, VerifyUserExistByEmailRepositorySpy } from '../mocks'
+import { CreateUserRepositorySpy, HasherSpy, VerifyUserExistByEmailRepositorySpy } from '../mocks'
 
 type SutTypes = {
   sut: CreateUser
   verifyUserExistByEmailRepositorySpy: VerifyUserExistByEmailRepositorySpy
   hasherSpy: HasherSpy
+  createUserRepositorySpy: CreateUserRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
   const verifyUserExistByEmailRepositorySpy = new VerifyUserExistByEmailRepositorySpy()
   const hasherSpy = new HasherSpy()
-  const sut = new CreateUser(verifyUserExistByEmailRepositorySpy, hasherSpy)
+  const createUserRepositorySpy = new CreateUserRepositorySpy()
+  const sut = new CreateUser(verifyUserExistByEmailRepositorySpy, hasherSpy, createUserRepositorySpy)
   return {
     sut,
     verifyUserExistByEmailRepositorySpy,
-    hasherSpy
+    hasherSpy,
+    createUserRepositorySpy
   }
 }
 
@@ -40,5 +43,17 @@ describe('CreateUser usecase', () => {
     const params = mockCreateUserParams()
     await sut.create(params)
     expect(hasherSpy.stringToHash).toEqual(params.password)
+  })
+
+  test('Should call ICreateUserRepository with correct values', async () => {
+    const { sut, createUserRepositorySpy, verifyUserExistByEmailRepositorySpy, hasherSpy } = makeSut()
+    verifyUserExistByEmailRepositorySpy.result = false
+    const params = mockCreateUserParams()
+    await sut.create(params)
+    expect(createUserRepositorySpy.user).toEqual({
+      email: params.email,
+      name: params.name,
+      password: hasherSpy.result
+    })
   })
 })

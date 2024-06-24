@@ -72,4 +72,13 @@ describe('CreateUser usecase', () => {
     const promise = sut.create(params)
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should throw if IHasher throws', async () => {
+    const { sut, verifyUserExistByEmailRepositorySpy, hasherSpy } = makeSut()
+    verifyUserExistByEmailRepositorySpy.result = false
+    jest.spyOn(hasherSpy, 'hash').mockImplementationOnce(throwError)
+    const params = mockCreateUserParams()
+    const promise = sut.create(params)
+    await expect(promise).rejects.toThrow()
+  })
 })

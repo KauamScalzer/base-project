@@ -7,8 +7,6 @@ export const mockCreateUserParams = (): ICreateUser.Params => ({
   email: faker.internet.email()
 })
 
-export const mockCreateUserResult = (): ICreateUser.Result => ({ id: faker.number.int() })
-
 export const mockAuthorizeUserResult = (): IAuthorizeUser.Result => ({
   id: faker.number.int(),
   name: faker.internet.userName(),

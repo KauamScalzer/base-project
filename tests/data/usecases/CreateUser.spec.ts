@@ -34,7 +34,7 @@ describe('CreateUser usecase', () => {
     const { sut } = makeSut()
     const params = mockCreateUserParams()
     const result = await sut.create(params)
-    expect(result).toBeNull()
+    expect(result).toBeFalsy()
   })
 
   test('Should call IHasher with correct password', async () => {

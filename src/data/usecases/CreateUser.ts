@@ -8,7 +8,7 @@ export class CreateUser implements ICreateUser {
     private readonly hasher: IHasher,
     private readonly createUserRepository: ICreateUserRepository
   ) {}
-  async create (user: ICreateUser.Params): Promise<ICreateUser.Result> {
+  async create (user: ICreateUser.Params): Promise<boolean> {
     const existUser = await this.verifyUserExistByEmailRepository.verify(user.email)
     if (!existUser) {
       const hashedPassword = await this.hasher.hash(user.password)
@@ -17,6 +17,6 @@ export class CreateUser implements ICreateUser {
         password: hashedPassword 
       })
     }
-    return null
+    return false
   }
 }

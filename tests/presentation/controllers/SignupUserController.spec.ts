@@ -95,7 +95,7 @@ describe('SignupUserController', () => {
 
   test('Should return 409 if recieved email is already in use', async () => {
     const { sut, createUserSpy } = makeSut()
-    createUserSpy.result = null
+    createUserSpy.result = false
     const request = mockCreateUserParams()
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(conflict(new AlreadyInUseError('email')))

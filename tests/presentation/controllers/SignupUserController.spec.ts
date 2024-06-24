@@ -1,9 +1,9 @@
 import { SignUpUserController } from '../../../src/presentation/controllers'
 import { faker } from '@faker-js/faker'
-import { badRequest, conflict } from '../../../src/presentation/helpers/httpHelpers'
+import { badRequest, conflict, serverError } from '../../../src/presentation/helpers/httpHelpers'
 import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../../../src/presentation/errors'
 import { CreateUserSpy } from '../mocks/MockUser'
-import { mockCreateUserParams } from '../../domain/mocks'
+import { mockCreateUserParams, throwError } from '../../domain/mocks'
 
 type SutTypes = {
   sut: SignUpUserController
@@ -96,5 +96,13 @@ describe('SignupUserController', () => {
     const request = mockCreateUserParams()
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(conflict(new AlreadyInUseError('email')))
+  })
+
+  test('Should return 500 if ICreateUser throw', async () => {
+    const { sut, createUserSpy } = makeSut()
+    jest.spyOn(createUserSpy, 'create').mockImplementationOnce(throwError)
+    const request = mockCreateUserParams()
+    const httpResponse = await sut.handle(request)
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })

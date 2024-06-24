@@ -1,7 +1,7 @@
 import { SignUpUserController } from '../../../src/presentation/controllers'
 import { faker } from '@faker-js/faker'
 import { badRequest } from '../../../src/presentation/helpers/httpHelpers'
-import { MissingParamError } from '../../../src/presentation/errors'
+import { InvalidParamTypeError, MissingParamError } from '../../../src/presentation/errors'
 
 type SutTypes = {
   sut: SignUpUserController
@@ -41,5 +41,16 @@ describe('SignupUserController', () => {
     }
     const httpResponse = await sut.handle(mockRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('password')))
+  })
+
+  test('Should return 400 if invalid type for name is provided', async () => {
+    const { sut } = makeSut()
+    const mockRequest: any = {
+      name: faker.number.int(),
+      email: faker.internet.email(),
+      password: faker.internet.password() 
+    }
+    const httpResponse = await sut.handle(mockRequest)
+    expect(httpResponse).toEqual(badRequest(new InvalidParamTypeError('name')))
   })
 })

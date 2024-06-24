@@ -16,6 +16,9 @@ export class SignUpUserController {
     if (typeof request.email !== 'string') {
       return badRequest(new InvalidParamTypeError('email'))
     }
+    if (typeof request.password !== 'string') {
+      return badRequest(new InvalidParamTypeError('password'))
+    }
     return {
       statusCode: 501,
       body: 'Not Implemented'

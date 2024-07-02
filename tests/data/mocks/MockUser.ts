@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { IVerifyUserExistByEmailRepository, ICreateUserRepository, IGetOneUserByEmailRepository } from '../../../src/data/protocols/db/user'
+import { IVerifyUserExistByEmailRepository, ICreateUserRepository, IGetOneUserByEmailRepository, IUpdateUserAccessTokenRepository } from '../../../src/data/protocols/db/user'
 
 export class VerifyUserExistByEmailRepositorySpy implements IVerifyUserExistByEmailRepository {
   email?: string
@@ -28,5 +28,15 @@ export class GetOneUserByEmailRepositorySpy implements IGetOneUserByEmailReposit
   async getOne (email: string): Promise<IGetOneUserByEmailRepository.Result> {
     this.email = email
     return this.result
+  }
+}
+
+export class UpdateUserAccessTokenRepositorySpy implements IUpdateUserAccessTokenRepository {
+  id?: number
+  token?: string
+
+  async update (id: number, token: string): Promise<void> {
+    this.id = id
+    this.token = token
   }
 }

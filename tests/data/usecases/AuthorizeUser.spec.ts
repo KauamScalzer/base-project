@@ -1,21 +1,24 @@
 import { AuthorizeUser } from '../../../src/data/usecases'
 import { mockCreateUserParams, throwError } from '../../domain/mocks'
-import { GetOneUserByEmailRepositorySpy, HashComparerSpy } from '../mocks'
+import { EncrypterSpy, GetOneUserByEmailRepositorySpy, HashComparerSpy } from '../mocks'
 
 type SutTypes = {
   sut: AuthorizeUser
   getOneUserByEmailRepositorySpy: GetOneUserByEmailRepositorySpy
   hashComparerSpy: HashComparerSpy
+  encrypterSpy: EncrypterSpy
 }
 
 const makeSut = (): SutTypes => {
   const getOneUserByEmailRepositorySpy = new GetOneUserByEmailRepositorySpy()
   const hashComparerSpy = new HashComparerSpy()
-  const sut = new AuthorizeUser(getOneUserByEmailRepositorySpy, hashComparerSpy)
+  const encrypterSpy = new EncrypterSpy()
+  const sut = new AuthorizeUser(getOneUserByEmailRepositorySpy, hashComparerSpy, encrypterSpy)
   return {
     sut,
     getOneUserByEmailRepositorySpy,
-    hashComparerSpy
+    hashComparerSpy,
+    encrypterSpy
   }
 }
 
@@ -65,5 +68,12 @@ describe('AuthorizeUser usecase', () => {
     const params = mockCreateUserParams()
     const result = await sut.authorize(params.email, params.password)
     expect(result).toBeNull()
+  })
+
+  test('Should call IEncrypter with correct id', async () => {
+    const { sut, encrypterSpy, getOneUserByEmailRepositorySpy } = makeSut()
+    const params = mockCreateUserParams()
+    await sut.authorize(params.email, params.password)
+    expect(encrypterSpy.string).toEqual(getOneUserByEmailRepositorySpy.result?.id.toString())
   })
 })

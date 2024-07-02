@@ -50,4 +50,12 @@ describe('AuthorizeUser usecase', () => {
     expect(hashComparerSpy.hashedString).toEqual(getOneUserByEmailRepositorySpy.result?.password)
     expect(hashComparerSpy.compareString).toEqual(params.password)
   })
+
+  test('Should throw if IHashComparer throws', async () => {
+    const { sut, hashComparerSpy } = makeSut()
+    jest.spyOn(hashComparerSpy, 'compare').mockImplementationOnce(throwError)
+    const params = mockCreateUserParams()
+    const promise = sut.authorize(params.email, params.password)
+    await expect(promise).rejects.toThrow()
+  })
 })

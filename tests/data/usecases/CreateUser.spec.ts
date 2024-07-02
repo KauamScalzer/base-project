@@ -57,7 +57,7 @@ describe('CreateUser usecase', () => {
     })
   })
 
-  test('Should true on success', async () => {
+  test('Should return true on success', async () => {
     const { sut, verifyUserExistByEmailRepositorySpy } = makeSut()
     verifyUserExistByEmailRepositorySpy.result = false
     const params = mockCreateUserParams()

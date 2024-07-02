@@ -1,5 +1,5 @@
 import { AuthorizeUser } from '../../../src/data/usecases'
-import { mockCreateUserParams } from '../../domain/mocks'
+import { mockCreateUserParams, throwError } from '../../domain/mocks'
 import { VerifyUserExistByEmailRepositorySpy } from '../mocks'
 
 type SutTypes = {
@@ -22,5 +22,13 @@ describe('AuthorizeUser usecase', () => {
     const params = mockCreateUserParams()
     await sut.authorize(params.email, params.password)
     expect(verifyUserExistByEmailRepositorySpy.email).toEqual(params.email)
+  })
+
+  test('Should throw if IVerifyUserExistByEmailRepository throws', async () => {
+    const { sut, verifyUserExistByEmailRepositorySpy } = makeSut()
+    jest.spyOn(verifyUserExistByEmailRepositorySpy, 'verify').mockImplementationOnce(throwError)
+    const params = mockCreateUserParams()
+    const promise = sut.authorize(params.email, params.password)
+    await expect(promise).rejects.toThrow()
   })
 })

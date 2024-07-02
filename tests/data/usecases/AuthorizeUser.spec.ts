@@ -1,18 +1,21 @@
 import { AuthorizeUser } from '../../../src/data/usecases'
 import { mockCreateUserParams, throwError } from '../../domain/mocks'
-import { GetOneUserByEmailRepositorySpy } from '../mocks'
+import { GetOneUserByEmailRepositorySpy, HashComparerSpy } from '../mocks'
 
 type SutTypes = {
   sut: AuthorizeUser
   getOneUserByEmailRepositorySpy: GetOneUserByEmailRepositorySpy
+  hashComparerSpy: HashComparerSpy
 }
 
 const makeSut = (): SutTypes => {
   const getOneUserByEmailRepositorySpy = new GetOneUserByEmailRepositorySpy()
-  const sut = new AuthorizeUser(getOneUserByEmailRepositorySpy)
+  const hashComparerSpy = new HashComparerSpy()
+  const sut = new AuthorizeUser(getOneUserByEmailRepositorySpy, hashComparerSpy)
   return {
     sut,
-    getOneUserByEmailRepositorySpy
+    getOneUserByEmailRepositorySpy,
+    hashComparerSpy
   }
 }
 
@@ -38,5 +41,13 @@ describe('AuthorizeUser usecase', () => {
     const params = mockCreateUserParams()
     const result = await sut.authorize(params.email, params.password)
     expect(result).toBeNull()
+  })
+
+  test('Should call IHashComparer with correct values', async () => {
+    const { sut, hashComparerSpy, getOneUserByEmailRepositorySpy } = makeSut()
+    const params = mockCreateUserParams()
+    await sut.authorize(params.email, params.password)
+    expect(hashComparerSpy.hashedString).toEqual(getOneUserByEmailRepositorySpy.result?.password)
+    expect(hashComparerSpy.compareString).toEqual(params.password)
   })
 })

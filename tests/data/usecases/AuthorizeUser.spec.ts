@@ -103,4 +103,15 @@ describe('AuthorizeUser usecase', () => {
     const promise = sut.authorize(params.email, params.password)
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return an user on success', async () => {
+    const { sut, getOneUserByEmailRepositorySpy, encrypterSpy } = makeSut()
+    const params = mockCreateUserParams()
+    const result = await sut.authorize(params.email, params.password)
+    expect(result).toEqual({
+      id: getOneUserByEmailRepositorySpy.result?.id,
+      name: getOneUserByEmailRepositorySpy.result?.name,
+      token: encrypterSpy.result
+    })
+  })
 })

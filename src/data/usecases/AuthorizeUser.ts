@@ -16,6 +16,11 @@ export class AuthorizeUser implements IAuthorizeUser {
       if (validPassword) {
         const token = await this.encrypter.encrypt(existUser.id.toString())
         await this.updateUserAccessTokenRepository.update(existUser.id, token)
+        return {
+          id: existUser.id,
+          name: existUser.name,
+          token
+        }
       }
     }
     return null

@@ -76,4 +76,12 @@ describe('AuthorizeUser usecase', () => {
     await sut.authorize(params.email, params.password)
     expect(encrypterSpy.string).toEqual(getOneUserByEmailRepositorySpy.result?.id.toString())
   })
+
+  test('Should throw if IEncrypter throws', async () => {
+    const { sut, encrypterSpy } = makeSut()
+    jest.spyOn(encrypterSpy, 'encrypt').mockImplementationOnce(throwError)
+    const params = mockCreateUserParams()
+    const promise = sut.authorize(params.email, params.password)
+    await expect(promise).rejects.toThrow()
+  })
 })

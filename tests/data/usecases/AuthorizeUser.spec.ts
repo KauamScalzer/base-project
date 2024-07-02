@@ -95,4 +95,12 @@ describe('AuthorizeUser usecase', () => {
     expect(updateUserAccessTokenRepositorySpy.id).toEqual(getOneUserByEmailRepositorySpy.result?.id)
     expect(updateUserAccessTokenRepositorySpy.token).toEqual(encrypterSpy.result)
   })
+
+  test('Should throw if IUpdateUserAccessTokenRepository throws', async () => {
+    const { sut, updateUserAccessTokenRepositorySpy } = makeSut()
+    jest.spyOn(updateUserAccessTokenRepositorySpy, 'update').mockImplementationOnce(throwError)
+    const params = mockCreateUserParams()
+    const promise = sut.authorize(params.email, params.password)
+    await expect(promise).rejects.toThrow()
+  })
 })

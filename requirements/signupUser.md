@@ -6,9 +6,9 @@
 2. ✅ Valida dados obrigatórios **name**, **email**, **password**
 3. ✅ Valida que os dados **name**, **email**, **password** são do tipo **string**
 4. ❌ Valida que o campo **email** é um e-mail válido
-5. ❌ **Valida** se já existe um usuário com o email fornecido
-6. ❌ Gera uma senha **criptografada** (essa senha não pode ser descriptografada)
-7. ❌ **Cria** uma conta para o usuário com os dados informados, **substituindo** a senha pela senha criptorafada
+5. ✅ **Valida** se já existe um usuário com o email fornecido
+6. ✅ Gera uma senha **criptografada** (essa senha não pode ser descriptografada)
+7. ✅ **Cria** uma conta para o usuário com os dados informados, **substituindo** a senha pela senha criptorafada
 8. ❌ Gera um **token** de acesso a partir do ID do usuário
 9. ❌ **Atualiza** os dados do usuário com o token de acesso gerado
 10. ❌ Retorna **200** com o token de acesso e o nome do usuário

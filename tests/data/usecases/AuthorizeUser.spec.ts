@@ -58,4 +58,12 @@ describe('AuthorizeUser usecase', () => {
     const promise = sut.authorize(params.email, params.password)
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return null if IHashComparer returns false', async () => {
+    const { sut, hashComparerSpy } = makeSut()
+    hashComparerSpy.result = false
+    const params = mockCreateUserParams()
+    const result = await sut.authorize(params.email, params.password)
+    expect(result).toBeNull()
+  })
 })

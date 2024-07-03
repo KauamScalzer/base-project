@@ -4,8 +4,11 @@ const config: Config = {
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  coverageProvider: 'v8',
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  coverageProvider: 'babel',
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.ts',
+    '!<rootDir>/src/main/**'
+  ],
   transform: { '.+\\.ts$': 'ts-jest' }
 };
 

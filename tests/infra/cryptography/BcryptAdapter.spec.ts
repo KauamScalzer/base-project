@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { BcryptAdapter } from '../../../src/infra/cryptography'
 import bcrypt from 'bcrypt'
+import { throwError } from '../../domain/mocks'
 
 const salt = 12
 const makeSut = (): BcryptAdapter => {
@@ -19,6 +20,14 @@ describe('Bcrypt Adapter', () => {
       const spy = jest.spyOn(bcrypt, 'hash')
       await sut.hash(param)
       expect(spy).toHaveBeenCalledWith(param, salt)
+    })
+
+    test('Should throw if if hash throws', async ()=> {
+      const sut = makeSut()
+      const param = stringParam()
+      jest.spyOn(bcrypt, 'hash').mockImplementationOnce(throwError)
+      const promise = sut.hash(param)
+      await expect(promise).rejects.toThrow()
     })
   })
 })

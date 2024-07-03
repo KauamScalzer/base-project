@@ -4,8 +4,9 @@
   "description": "A TypeScript project setup for future development endeavors.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --runInBand --no-cache",
+    "test": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand --no-cache",
     "test:unit": "npm test -- --watch -c jest.unit.config.ts",
+    "test:integration": "npm test -- --watch -c jest.integration.config.ts",
     "prepare": "husky"
   },
   "repository": {
@@ -39,6 +40,11 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "jsonwebtoken": "^9.0.2"
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.12.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
   }
 }

@@ -1,7 +1,7 @@
 > ## Endpoints desse projeto
 
 1. [Cadastro de usuário](./requirements/signupUser.md)
-1. [Login de usuário](./requirements/loginUser.md)
+2. [Login de usuário](./requirements/loginUser.md)
 
 > ## Princípios
 

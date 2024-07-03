@@ -2,6 +2,8 @@ import request from 'supertest'
 import app from './../../../src/main/config/app'
 import { faker } from '@faker-js/faker'
 import { AppDataSource } from '../../../src/main/config/DataSource'
+import { hash } from 'bcrypt'
+import env from '../../../src/main/config/env'
 
 beforeAll(async () => {
   await AppDataSource.initialize()
@@ -24,6 +26,34 @@ describe('User Routes', () => {
           name: faker.internet.userName(),
           email: faker.internet.email(),
           password: faker.internet.password()
+        }).
+        expect(200)
+    })
+  })
+
+  describe('/login', () => {
+    test('Should return 401 on login', async () => {
+      await request(app).post('/api/user/login').
+        send({
+          email: faker.internet.email(),
+          password: faker.internet.password()
+        }).
+        expect(401)
+    })
+
+    test('Should return 200 on success', async () => {
+      const name = faker.internet.userName()
+      const email = faker.internet.email()
+      const password = await hash('123', env.salt)
+      await AppDataSource.getRepository('user').save({
+        name,
+        password,
+        email
+      })
+      await request(app).post('/api/user/login').
+        send({
+          email,
+          password: '123'
         }).
         expect(200)
     })

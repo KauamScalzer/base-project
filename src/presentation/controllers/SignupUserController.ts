@@ -1,9 +1,9 @@
 import { IAuthorizeUser, ICreateUser } from '../../domain/usecases'
 import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../errors'
 import { badRequest, conflict, ok, serverError } from '../helpers/httpHelpers'
-import { HttpResponse } from '../protocols'
+import { Controller, HttpResponse } from '../protocols'
 
-export class SignUpUserController {
+export class SignUpUserController implements Controller {
   constructor (
     private readonly createUser: ICreateUser,
     private readonly authorizeUser: IAuthorizeUser

@@ -1,0 +1,1 @@
+export { adaptRouteExpress } from './adaptRouteExpress'

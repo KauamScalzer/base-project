@@ -8,6 +8,10 @@ const environment: { [key: string]: string } = {
 dotenv.config({ path: environment[process.env.NODE_ENV ?? 'local'] })
 
 export default {
+  port: parseInt(process.env.PORT ?? '3000'),
+  protocol: process.env.PROTOCOL,
+  url: process.env.URL,
+
   dbName: process.env.DB_NAME,
   dbHost: process.env.DB_HOST,
   dbUserName: process.env.DB_USERNAME,

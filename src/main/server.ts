@@ -1,2 +1,9 @@
+import 'reflect-metadata'
 import app from './config/app'
-app.listen(5000, () => console.log('Server running at http://localhost:5000'))
+import { AppDataSource } from './config/DataSource'
+import env from './config/env'
+
+AppDataSource.initialize().
+  then(async () => {
+    app.listen(env.port, () => console.log(`Server running at ${env.protocol}${env.url}:${env.port}`))
+  }).catch(console.error)

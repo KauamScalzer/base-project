@@ -12,6 +12,9 @@ export default {
   protocol: process.env.PROTOCOL,
   url: process.env.URL,
 
+  salt: parseInt(process.env.SALT ?? '12'),
+  secret: process.env.SECRET ?? 'kpduirkmg',
+
   dbName: process.env.DB_NAME,
   dbHost: process.env.DB_HOST,
   dbUserName: process.env.DB_USERNAME,

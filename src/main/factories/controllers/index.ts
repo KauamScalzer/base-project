@@ -1,0 +1,1 @@
+export { makeSignUpUserController } from './SignUpUserControllerFactory'

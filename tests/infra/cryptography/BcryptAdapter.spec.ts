@@ -5,7 +5,11 @@ import { throwError } from '../../domain/mocks'
 
 jest.mock('bcrypt', () => ({
   async hash (): Promise<string> {
-    return 'hash'
+    return hashedString
+  },
+
+  async compare (): Promise<boolean> {
+    return true
   }
 }))
 
@@ -13,6 +17,8 @@ const salt = 12
 const makeSut = (): BcryptAdapter => {
   return new BcryptAdapter(salt)
 }
+
+const hashedString: string = faker.string.uuid()
 
 const stringParam = (): string => {
   return faker.lorem.lines()
@@ -40,7 +46,17 @@ describe('Bcrypt Adapter', () => {
       const sut = makeSut()
       const param = stringParam()
       const result = await sut.hash(param)
-      expect(result).toEqual('hash')
+      expect(result).toEqual(hashedString)
+    })
+  })
+
+  describe('compare()', () => {
+    test('Should call compare with correct values', async ()=> {
+      const sut = makeSut()
+      const param = stringParam()
+      const spy = jest.spyOn(bcrypt, 'compare')
+      await sut.compare(param, hashedString)
+      expect(spy).toHaveBeenCalledWith(param, hashedString)
     })
   })
 })

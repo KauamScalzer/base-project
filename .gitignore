@@ -3,3 +3,4 @@ coverage
 .env.test
 .env.local
 dist
+.env

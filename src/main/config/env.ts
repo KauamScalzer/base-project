@@ -2,10 +2,11 @@ import dotenv from 'dotenv'
 
 const environment: { [key: string]: string } = {
   local: '.env.local',
-  test: '.env.test'
+  test: '.env.test',
+  prod: '.env'
 }
 
-dotenv.config({ path: environment[process.env.NODE_ENV ?? 'local'] })
+dotenv.config({ path: environment[process.env.NODE_ENV ?? 'prod'] })
 
 export default {
   port: parseInt(process.env.PORT ?? '3000'),

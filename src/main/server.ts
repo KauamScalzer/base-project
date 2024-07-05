@@ -1,6 +1,6 @@
 import 'reflect-metadata'
-import app from './config/app'
-import { AppDataSource } from './config/DataSource'
+import app from '@/main/config/app'
+import { AppDataSource } from '@/main/config/DataSource'
 import env from './config/env'
 
 AppDataSource.initialize().

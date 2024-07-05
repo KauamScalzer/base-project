@@ -1,6 +1,5 @@
-import { ICreateUser } from '../../domain/usecases'
-import { IHasher } from '../protocols/cryptography'
-import { IVerifyUserExistByEmailRepository, ICreateUserRepository } from '../protocols/db/user'
+import { ICreateUser } from '@/domain/usecases'
+import { IHasher, IVerifyUserExistByEmailRepository, ICreateUserRepository } from '@/data/protocols'
 
 export class CreateUser implements ICreateUser {
   constructor (
@@ -8,6 +7,7 @@ export class CreateUser implements ICreateUser {
     private readonly hasher: IHasher,
     private readonly createUserRepository: ICreateUserRepository
   ) {}
+
   async create (user: ICreateUser.Params): Promise<boolean> {
     const existUser = await this.verifyUserExistByEmailRepository.verify(user.email)
     if (!existUser) {

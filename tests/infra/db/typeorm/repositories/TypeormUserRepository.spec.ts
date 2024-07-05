@@ -1,7 +1,7 @@
 import 'reflect-metadata'
-import { mockCreateUserParams } from '../../../../domain/mocks'
-import { TypeormUserRepository } from '../../../../../src/infra/db/typeorm/repositories'
-import { AppDataSource } from '../../../../../src/main/config/DataSource'
+import { mockCreateUserParams } from '@/tests/domain/mocks'
+import { TypeormUserRepository } from '@/infra/db/typeorm/repositories'
+import { AppDataSource } from '@/main/config/DataSource'
 import { faker } from '@faker-js/faker'
 
 const makeSut = (): TypeormUserRepository => {

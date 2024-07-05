@@ -1,6 +1,5 @@
-import { IAuthorizeUser } from '../../domain/usecases'
-import { IEncrypter, IHashComparer } from '../protocols/cryptography'
-import { IGetOneUserByEmailRepository, IUpdateUserAccessTokenRepository } from '../protocols/db/user'
+import { IAuthorizeUser } from '@/domain/usecases'
+import { IEncrypter, IHashComparer, IGetOneUserByEmailRepository, IUpdateUserAccessTokenRepository } from '@/data/protocols'
 
 export class AuthorizeUser implements IAuthorizeUser {
   constructor (
@@ -9,6 +8,7 @@ export class AuthorizeUser implements IAuthorizeUser {
     private readonly encrypter: IEncrypter,
     private readonly updateUserAccessTokenRepository: IUpdateUserAccessTokenRepository
   ) {}
+
   async authorize (email: string, password: string): Promise<IAuthorizeUser.Result> {
     const existUser = await this.getOneUserByEmailRepository.getOne(email)
     if (existUser) {

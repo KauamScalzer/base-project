@@ -1,6 +1,6 @@
-import { CreateUser } from '../../../src/data/usecases/CreateUser'
-import { mockCreateUserParams, throwError } from '../../domain/mocks'
-import { CreateUserRepositorySpy, HasherSpy, VerifyUserExistByEmailRepositorySpy } from '../mocks'
+import { CreateUser } from '@/data/usecases/CreateUser'
+import { mockCreateUserParams, throwError } from '@/tests/domain/mocks'
+import { CreateUserRepositorySpy, HasherSpy, VerifyUserExistByEmailRepositorySpy } from '@/tests/data/mocks'
 
 type SutTypes = {
   sut: CreateUser

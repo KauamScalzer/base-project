@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm'
-import { User } from '../../infra/db/typeorm/models'
+import { User } from '@/infra/db'
 import env from './env'
 
 export const AppDataSource = new DataSource({

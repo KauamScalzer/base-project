@@ -1,7 +1,7 @@
-import { IAuthorizeUser } from '../../domain/usecases'
-import { InvalidParamTypeError, MissingParamError } from '../errors'
-import { badRequest, ok, serverError, unauthorized } from '../helpers/httpHelpers'
-import { Controller, HttpResponse } from '../protocols'
+import { IAuthorizeUser } from '@/domain/usecases'
+import { InvalidParamTypeError, MissingParamError } from '@/presentation/errors'
+import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers'
+import { Controller, HttpResponse } from '@/presentation/protocols'
 
 export class LoginUserController implements Controller {
   constructor (

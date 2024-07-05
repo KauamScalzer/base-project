@@ -1,9 +1,9 @@
-import { SignUpUserController } from '../../../src/presentation/controllers'
+import { SignUpUserController } from '@/presentation/controllers'
+import { badRequest, conflict, ok, serverError } from '@/presentation/helpers'
+import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '@/presentation/errors'
+import { AuthorizeUserSpy, CreateUserSpy } from '@/tests/presentation/mocks/MockUser'
+import { mockCreateUserParams, throwError } from '@/tests/domain/mocks'
 import { faker } from '@faker-js/faker'
-import { badRequest, conflict, ok, serverError } from '../../../src/presentation/helpers/httpHelpers'
-import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../../../src/presentation/errors'
-import { AuthorizeUserSpy, CreateUserSpy } from '../mocks/MockUser'
-import { mockCreateUserParams, throwError } from '../../domain/mocks'
 
 type SutTypes = {
   sut: SignUpUserController

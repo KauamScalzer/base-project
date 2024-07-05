@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { IVerifyUserExistByEmailRepository, ICreateUserRepository, IGetOneUserByEmailRepository, IUpdateUserAccessTokenRepository } from '../../../src/data/protocols/db/user'
+import { IVerifyUserExistByEmailRepository, ICreateUserRepository, IGetOneUserByEmailRepository, IUpdateUserAccessTokenRepository } from '@/data/protocols'
 
 export class VerifyUserExistByEmailRepositorySpy implements IVerifyUserExistByEmailRepository {
   email?: string

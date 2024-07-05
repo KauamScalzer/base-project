@@ -1,6 +1,6 @@
-import { AuthorizeUser } from '../../../src/data/usecases'
-import { mockCreateUserParams, throwError } from '../../domain/mocks'
-import { EncrypterSpy, GetOneUserByEmailRepositorySpy, HashComparerSpy, UpdateUserAccessTokenRepositorySpy } from '../mocks'
+import { AuthorizeUser } from '@/data/usecases'
+import { mockCreateUserParams, throwError } from '@/tests/domain/mocks'
+import { EncrypterSpy, GetOneUserByEmailRepositorySpy, HashComparerSpy, UpdateUserAccessTokenRepositorySpy } from '@/tests/data/mocks'
 
 type SutTypes = {
   sut: AuthorizeUser

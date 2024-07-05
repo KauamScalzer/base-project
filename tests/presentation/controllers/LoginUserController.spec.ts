@@ -1,9 +1,9 @@
-import { LoginUserController } from '../../../src/presentation/controllers'
+import { LoginUserController } from '@/presentation/controllers'
+import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers'
+import { InvalidParamTypeError, MissingParamError } from '@/presentation/errors'
+import { AuthorizeUserSpy } from '@/tests/presentation/mocks'
+import { mockCreateUserParams, throwError } from '@/tests/domain/mocks'
 import { faker } from '@faker-js/faker'
-import { badRequest, ok, serverError, unauthorized } from '../../../src/presentation/helpers/httpHelpers'
-import { InvalidParamTypeError, MissingParamError } from '../../../src/presentation/errors'
-import { AuthorizeUserSpy } from '../mocks/MockUser'
-import { mockCreateUserParams, throwError } from '../../domain/mocks'
 
 type SutTypes = {
   sut: LoginUserController

@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { IHasher, IHashComparer, IEncrypter } from '../../../src/data/protocols/cryptography'
+import { IHasher, IHashComparer, IEncrypter } from '@/data/protocols'
 
 export class HasherSpy implements IHasher {
   stringToHash?: string

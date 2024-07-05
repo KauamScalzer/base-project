@@ -1,7 +1,7 @@
-import { IAuthorizeUser, ICreateUser } from '../../domain/usecases'
-import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '../errors'
-import { badRequest, conflict, ok, serverError } from '../helpers/httpHelpers'
-import { Controller, HttpResponse } from '../protocols'
+import { IAuthorizeUser, ICreateUser } from '@/domain/usecases'
+import { AlreadyInUseError, InvalidParamTypeError, MissingParamError } from '@/presentation/errors'
+import { badRequest, conflict, ok, serverError } from '@/presentation/helpers'
+import { Controller, HttpResponse } from '@/presentation/protocols'
 
 export class SignUpUserController implements Controller {
   constructor (

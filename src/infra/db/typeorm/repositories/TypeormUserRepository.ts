@@ -1,5 +1,5 @@
-import { ICreateUserRepository, IVerifyUserExistByEmailRepository, IGetOneUserByEmailRepository, IUpdateUserAccessTokenRepository } from '../../../../data/protocols/db/user'
-import { AppDataSource } from '../../../../main/config/DataSource'
+import { ICreateUserRepository, IVerifyUserExistByEmailRepository, IGetOneUserByEmailRepository, IUpdateUserAccessTokenRepository } from '@/data/protocols/db'
+import { AppDataSource } from '@/main/config/DataSource'
 import { User } from '../models'
 
 export class TypeormUserRepository implements ICreateUserRepository, IVerifyUserExistByEmailRepository, IGetOneUserByEmailRepository, IUpdateUserAccessTokenRepository {

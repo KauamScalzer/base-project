@@ -1,9 +1,9 @@
+import { AppDataSource } from '@/main/config/DataSource'
+import app from '@/main/config/app'
+import env from '@/main/config/env'
 import request from 'supertest'
-import app from './../../../src/main/config/app'
 import { faker } from '@faker-js/faker'
-import { AppDataSource } from '../../../src/main/config/DataSource'
 import { hash } from 'bcrypt'
-import env from '../../../src/main/config/env'
 
 beforeAll(async () => {
   await AppDataSource.initialize()

@@ -1,7 +1,7 @@
-import { AuthorizeUser } from '../../../data/usecases'
-import { TypeormUserRepository } from '../../../infra/db/typeorm/repositories'
-import { BcryptAdapter, JwtAdapter } from '../../../infra/cryptography'
-import env from '../../config/env'
+import { AuthorizeUser } from '@/data/usecases'
+import { TypeormUserRepository } from '@/infra/db'
+import { BcryptAdapter, JwtAdapter } from '@/infra/cryptography'
+import env from '@/main/config/env'
 
 export const makeAuthorizeUser = (): AuthorizeUser => {
   const salt = env.salt

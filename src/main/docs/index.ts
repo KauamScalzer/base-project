@@ -1,5 +1,6 @@
-import { LoginPath } from '@/main/docs/paths'
-import { loginParamsSchema, userSchema } from '@/main/docs/schemas'
+import { loginPath } from './paths'
+import { errorSchema, loginParamsSchema, userSchema } from './schemas'
+import { badRequestComponent, notFoundComponent, serverErrorComponent, unauthorizedComponent } from './components'
 
 export default {
   openapi: '3.0.0',
@@ -9,10 +10,17 @@ export default {
     version: '1.0.0'
   },
   servers: [{ url: '/api' }],
-  tags: [{ name: 'Login' }],
-  paths: { '/user/login': LoginPath },
+  tags: [{ name: 'User' }],
+  paths: { '/user/login': loginPath },
   schemas: {
     userSchema,
-    loginParamsSchema 
+    loginParamsSchema,
+    errorSchema
+  },
+  components: {
+    badRequestComponent,
+    serverErrorComponent,
+    unauthorizedComponent,
+    notFoundComponent
   }
 }

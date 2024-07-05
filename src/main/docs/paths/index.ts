@@ -1,1 +1,1 @@
-export { LoginPath } from './LoginPath'
+export { loginPath } from './loginPath'
